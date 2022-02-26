@@ -130,6 +130,14 @@ function updateToRead(bookID) {
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
+function updateToUnread(bookID) {
+    const bookTarget = findBook(bookID);
+    if (bookTarget === null) return;
+
+    bookTarget.isCompleted = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
 function findBook(bookID) {
     for (book of books) {
         if (book.id === bookID) {
