@@ -13,6 +13,9 @@ document.addEventListener(RENDER_EVENT, function () {
     const unreadBookList = document.getElementById("unread-books");
     unreadBookList.innerHTML = "";
 
+    const readBookList = document.getElementById("read-books");
+    readBookList.innerHTML = "";
+
     for (book of books) {
         const bookElement = createBook(book);
         if (book.isCompleted) {
