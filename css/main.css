@@ -1,0 +1,32 @@
+.check-button {
+    background: url('../assets/ic_check.svg');
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    margin-left: 16px;
+    cursor: pointer;
+    border: none;
+    float: right;
+}
+
+.uncheck-button {
+    background: url('../assets/ic_uncheck.svg');
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    margin-left: 16px;
+    cursor: pointer;
+    border: none;
+    float: right;
+}
+
+.trash-button {
+    background: url('../assets/ic_remove.svg');
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    margin-left: 16px;
+    cursor: pointer;
+    border: none;
+    float: right;
+}
