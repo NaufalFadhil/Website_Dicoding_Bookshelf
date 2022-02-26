@@ -82,7 +82,7 @@ function createBook(bookObject) {
         unreadButton.classList.add("uncheck-button");
 
         unreadButton.addEventListener("click", function () {
-            unreadBook(bookObject.id);
+            updateToUnread(bookObject.id);
         });
 
         const trashButton = document.createElement("button");
@@ -100,7 +100,7 @@ function createBook(bookObject) {
         const checkButton = document.createElement("button");
         checkButton.classList.add("check-button");
         checkButton.addEventListener("click", function () {
-            addTaskToCompleted(bookObject.id);
+            updateToRead(bookObject.id);
         });
 
         const buttonContainer = document.createElement("div");
@@ -120,4 +120,20 @@ function createBook(bookObject) {
     container.setAttribute("id", `book-${bookObject.id}`);
 
     return container;
+}
+
+function updateToRead(bookID) {
+    const bookTarget = findBook(bookID);
+    if (bookTarget === null) return;
+
+    bookTarget.isCompleted = true;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function findBook(bookID) {
+    for (book of books) {
+        if (book.id === bookID) {
+            return book;
+        }
+    }
 }
