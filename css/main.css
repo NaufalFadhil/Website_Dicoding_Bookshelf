@@ -17,6 +17,16 @@ label {
     color: #1B262C;
 }
 
+footer p a {
+    color: #BBE1FA;
+    text-decoration: none;
+}
+
+footer p a:hover {
+    color: #BBE1FA;
+    text-decoration: underline;
+}
+
 .card {
     background-color: #BBE1FA;
 }
