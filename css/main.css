@@ -30,3 +30,14 @@
     border: none;
     float: right;
 }
+
+.edit-button {
+    background: url('../assets/ic_edit.svg');
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    margin-left: 16px;
+    cursor: pointer;
+    border: none;
+    float: right;
+}

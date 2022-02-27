@@ -65,6 +65,7 @@ function generateBookObject(id, title, author, year, isCompleted) {
 }
 
 function addBook() {
+    let id = parseInt(document.getElementById("inputID").value);
     const title = document.getElementById("inputTitle").value;
     const author = document.getElementById("inputAuthor").value;
     const year = parseInt(document.getElementById("inputYear").value);
@@ -74,10 +75,15 @@ function addBook() {
         isRead = true;
     }
 
-    const generateID = generateId();
-    const bookObject = generateBookObject(generateID, title, author, year, isRead);
-    books.push(bookObject);
+    if (isNaN(id)) {
+        id = generateId();
+        const bookObject = generateBookObject(id, title, author, year, isRead);
+        books.push(bookObject);
+    } else {
+        editBook(id, title, author, year, isRead);
+    }
 
+    resetInput();
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
@@ -113,9 +119,15 @@ function createBook(bookObject) {
             removeBook(bookObject.id);
         });
 
+        const editButton = document.createElement("button");
+        editButton.classList.add("edit-button");
+        editButton.addEventListener("click", function () {
+            viewBook(bookObject.id);
+        });
+
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("col-sm-2");
-        buttonContainer.append(unreadButton, trashButton);
+        buttonContainer.append(unreadButton, trashButton, editButton);
 
         rowContainer.append(buttonContainer);
     } else {
@@ -131,9 +143,15 @@ function createBook(bookObject) {
             removeBook(bookObject.id);
         });
 
+        const editButton = document.createElement("button");
+        editButton.classList.add("edit-button");
+        editButton.addEventListener("click", function () {
+            viewBook(bookObject.id);
+        });
+
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("col-sm-2");
-        buttonContainer.append(checkButton, trashButton);
+        buttonContainer.append(checkButton, trashButton, editButton);
 
         rowContainer.append(buttonContainer);
     }
@@ -166,6 +184,33 @@ function updateToUnread(bookID) {
     bookTarget.isCompleted = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData()
+}
+
+
+function viewBook(bookID) {
+    const bookTarget = findBook(bookID);
+    if (bookTarget === null) return;
+    document.getElementById("inputID").value = bookTarget.id;
+    document.getElementById("inputTitle").value = bookTarget.title;
+    document.getElementById("inputAuthor").value = bookTarget.author;
+    document.getElementById("inputYear").value = bookTarget.year;
+    document.getElementById("checkboxIsRead").checked = bookTarget.isCompleted;
+}
+
+function editBook(id, title, author, year, isCompleted) {
+    const bookTarget = findBookIndex(id);
+    if (bookTarget === -1) return;
+
+    console.log(bookTarget);
+
+    books[bookTarget].id = id;
+    books[bookTarget].title = title;
+    books[bookTarget].author = author;
+    books[bookTarget].year = year;
+    books[bookTarget].isCompleted = isCompleted;
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function removeBook(bookID) {
@@ -227,4 +272,12 @@ function searchBook() {
     searchResult = books.filter((book) => book.title === keyword);
 
     document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function resetInput() {
+    document.getElementById("inputID").value = null;
+    document.getElementById("inputTitle").value = "";
+    document.getElementById("inputAuthor").value = "";
+    document.getElementById("inputYear").value = null;
+    document.getElementById("checkboxIsRead").checked = false;
 }
