@@ -210,8 +210,6 @@ function editBook(id, title, author, year, isCompleted) {
     const bookTarget = findBookIndex(id);
     if (bookTarget === -1) return;
 
-    console.log(bookTarget);
-
     books[bookTarget].id = id;
     books[bookTarget].title = title;
     books[bookTarget].author = author;
@@ -282,6 +280,11 @@ function searchBook() {
     const keyword = document.getElementById("inputSearch").value;
     searchResult = books.filter((book) => book.title === keyword);
 
+    if (isNaN(keyword)) {
+        if (searchResult.length === 0) {
+            alert("Book not found!\nPlease write correctly.");
+        }
+    }
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
@@ -291,4 +294,7 @@ function resetInput() {
     document.getElementById("inputAuthor").value = "";
     document.getElementById("inputYear").value = null;
     document.getElementById("checkboxIsRead").checked = false;
+
+    document.getElementById("submit-button").value = "Add to bookshelf";
+    document.getElementById("title-heading").textContent = "ADD BOOK";
 }
