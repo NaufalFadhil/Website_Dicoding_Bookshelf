@@ -80,7 +80,6 @@ function createBook(bookObject) {
     if (bookObject.isCompleted) {
         const unreadButton = document.createElement("button");
         unreadButton.classList.add("uncheck-button");
-
         unreadButton.addEventListener("click", function () {
             updateToUnread(bookObject.id);
         });
@@ -138,10 +137,27 @@ function updateToUnread(bookID) {
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
+function removeBook(bookID) {
+    const bookTarget = findBookIndex(bookID);
+    if (bookTarget === -1) return;
+    books.splice(bookTarget, 1);
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
 function findBook(bookID) {
     for (book of books) {
         if (book.id === bookID) {
             return book;
         }
     }
+}
+
+function findBookIndex(bookID) {
+    for (index in books) {
+        if (books[index].id === bookID) {
+            return index;
+        }
+    }
+    return -1
 }
