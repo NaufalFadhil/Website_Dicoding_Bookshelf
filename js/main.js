@@ -201,6 +201,9 @@ function viewBook(bookID) {
     document.getElementById("inputAuthor").value = bookTarget.author;
     document.getElementById("inputYear").value = bookTarget.year;
     document.getElementById("checkboxIsRead").checked = bookTarget.isCompleted;
+
+    document.getElementById("submit-button").value = "Edit this book";
+    document.getElementById("title-heading").textContent = "EDIT BOOK";
 }
 
 function editBook(id, title, author, year, isCompleted) {
@@ -220,9 +223,11 @@ function editBook(id, title, author, year, isCompleted) {
 }
 
 function removeBook(bookID) {
-    const bookTarget = findBookIndex(bookID);
-    if (bookTarget === -1) return;
-    books.splice(bookTarget, 1);
+    if (confirm("are you sure will delete this book?")) {
+        const bookTarget = findBookIndex(bookID);
+        if (bookTarget === -1) return;
+        books.splice(bookTarget, 1);
+    }
 
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData()

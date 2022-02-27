@@ -24,7 +24,7 @@
     <div class="container mt-3">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">ADD BOOK</h4>
+                <h4 class="card-title text-center" id="title-heading">ADD BOOK</h4>
                 <form id="form">
                     <input type="number" class="form-control" id="inputID" hidden />
                     <div class="mb-3">
@@ -43,7 +43,8 @@
                         <input type="checkbox" class="form-check-input" id="checkboxIsRead">
                         <label class="form-check-label" for="checkboxIsRead">has read this book?</label>
                     </div>
-                    <input type="submit" value="Add to bookshelf" name="Submit" class="btn btn-primary">
+                    <input type="submit" value="Add to bookshelf" name="Submit" class="btn btn-primary"
+                        id="submit-button">
                     <input value="Reset" id="reset-button" class="btn btn-secondary">
                 </form>
             </div>
