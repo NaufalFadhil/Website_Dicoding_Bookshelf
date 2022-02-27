@@ -1,3 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+    background-color: #1B262C;
+    font-family: 'Poppins', sans-serif;
+}
+
+h4,
+h5 {
+    font-weight: bold;
+}
+
+h4,
+p,
+h5,
+label {
+    color: #1B262C;
+}
+
+.card {
+    background-color: #BBE1FA;
+}
+
+.list-item .card-body .card {
+    background-color: #3282B8;
+
+}
+
+.list-item .card-body .card p {
+    color: #BBE1FA;
+    font-weight: normal;
+}
+
+.list-item .card-body .card h5,
+.navbar-brand {
+    color: #BBE1FA;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #000;
+    color: #BBE1FA;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #2d4758;
+    color: #BBE1FA;
+    font-weight: bold;
+}
+
 .check-button {
     background: url('../assets/ic_check.svg');
     background-size: contain;
@@ -40,4 +91,22 @@
     cursor: pointer;
     border: none;
     float: right;
+}
+
+.check-button:hover,
+.uncheck-button:hover,
+.trash-button:hover,
+.edit-button:hover {
+    animation-name: spin;
+    animation-duration: 500ms;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
