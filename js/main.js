@@ -50,7 +50,7 @@ function generateBookObject(id, title, author, year, isCompleted) {
 function addBook() {
     const title = document.getElementById("inputTitle").value;
     const author = document.getElementById("inputAuthor").value;
-    const year = document.getElementById("inputYear").value;
+    const year = parseInt(document.getElementById("inputYear").value);
     const checkIsRead = document.getElementById("checkboxIsRead");
     let isRead = false;
     if (checkIsRead.checked) {
