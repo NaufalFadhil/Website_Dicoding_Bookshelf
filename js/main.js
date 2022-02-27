@@ -2,12 +2,19 @@ const books = [];
 const RENDER_EVENT = "render-book";
 const SAVED_EVENT = "saved-book";
 const STORAGE_KEY = "BOOKSHELF_APPS";
+let searchResult = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     const submitForm = document.getElementById("form");
     submitForm.addEventListener("submit", function (event) {
         event.preventDefault();
         addBook();
+    });
+
+    const searchForm = document.getElementById("form-search");
+    searchForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        searchBook();
     });
 
     if (isStorageExist()) {
@@ -22,14 +29,24 @@ document.addEventListener(RENDER_EVENT, function () {
     const readBookList = document.getElementById("read-books");
     readBookList.innerHTML = "";
 
-    for (book of books) {
-        const bookElement = createBook(book);
-        if (book.isCompleted) {
-            readBookList.append(bookElement);
-        } else {
-            unreadBookList.append(bookElement);
+    if (searchResult.length === 0) {
+        for (book of books) {
+            const bookElement = createBook(book);
+            if (book.isCompleted) {
+                readBookList.append(bookElement);
+            } else {
+                unreadBookList.append(bookElement);
+            }
         }
-        console.log(bookElement);
+    } else {
+        for (book of searchResult) {
+            const bookElement = createBook(book);
+            if (book.isCompleted) {
+                readBookList.append(bookElement);
+            } else {
+                unreadBookList.append(bookElement);
+            }
+        }
     }
 });
 
@@ -202,5 +219,12 @@ function loadDataFromStorage() {
             books.push(book);
         }
     }
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function searchBook() {
+    const keyword = document.getElementById("inputSearch").value;
+    searchResult = books.filter((book) => book.title === keyword);
+
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
