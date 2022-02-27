@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         addBook();
     });
+
+    if (isStorageExist()) {
+        loadDataFromStorage();
+    }
 });
 
 document.addEventListener(RENDER_EVENT, function () {
@@ -187,4 +191,16 @@ function isStorageExist() {
         return false;
     }
     return true;
+}
+
+function loadDataFromStorage() {
+    const serializedData = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(serializedData);
+
+    if (data !== null) {
+        for (book of data) {
+            books.push(book);
+        }
+    }
+    document.dispatchEvent(new Event(RENDER_EVENT));
 }
