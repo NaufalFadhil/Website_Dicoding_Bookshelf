@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
         searchBook();
     });
 
+    const resetButton = document.getElementById("reset-button");
+    resetButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        resetInput();
+    });
+
     if (isStorageExist()) {
         loadDataFromStorage();
     }
