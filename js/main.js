@@ -1,5 +1,7 @@
 const books = [];
 const RENDER_EVENT = "render-book";
+const SAVED_EVENT = "saved-book";
+const STORAGE_KEY = "BOOKSHELF_APPS";
 
 document.addEventListener("DOMContentLoaded", function () {
     const submitForm = document.getElementById("form");
@@ -55,8 +57,8 @@ function addBook() {
     const bookObject = generateBookObject(generateID, title, author, year, isRead);
     books.push(bookObject);
 
-    console.log(books);
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function createBook(bookObject) {
@@ -102,9 +104,15 @@ function createBook(bookObject) {
             updateToRead(bookObject.id);
         });
 
+        const trashButton = document.createElement("button");
+        trashButton.classList.add("trash-button");
+        trashButton.addEventListener("click", function () {
+            removeBook(bookObject.id);
+        });
+
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("col-sm-2");
-        buttonContainer.append(checkButton);
+        buttonContainer.append(checkButton, trashButton);
 
         rowContainer.append(buttonContainer);
     }
@@ -127,6 +135,7 @@ function updateToRead(bookID) {
 
     bookTarget.isCompleted = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData()
 }
 
 function updateToUnread(bookID) {
@@ -135,6 +144,7 @@ function updateToUnread(bookID) {
 
     bookTarget.isCompleted = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData()
 }
 
 function removeBook(bookID) {
@@ -143,6 +153,7 @@ function removeBook(bookID) {
     books.splice(bookTarget, 1);
 
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData()
 }
 
 function findBook(bookID) {
@@ -160,4 +171,20 @@ function findBookIndex(bookID) {
         }
     }
     return -1
+}
+
+function saveData() {
+    if (isStorageExist()) {
+        const parsed = JSON.stringify(books);
+        localStorage.setItem(STORAGE_KEY, parsed);
+        document.dispatchEvent(new Event(SAVED_EVENT));
+    }
+}
+
+function isStorageExist() {
+    if (typeof (Storage) === undefined) {
+        alert("Browser tidak mendukung local storage");
+        return false;
+    }
+    return true;
 }
